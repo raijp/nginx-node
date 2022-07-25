@@ -1,4 +1,6 @@
 # nginx-node
+
+1. RUN:
 ```
 git clone https://github.com/raijp/nginx-node.git && cd nginx-node
 docker build -t nginx:bullseye nginx/.
@@ -20,5 +22,9 @@ docker run --name node1 \
   -itd node:jammy \
   /bin/bash -c "nohup node app.js"
 
+```
+
+2. RUN:
+```
 curl 127.0.0.1:8082
 ```
