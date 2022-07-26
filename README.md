@@ -18,13 +18,21 @@ docker rm -f node1
 docker run --name node1 \
   --network=nginx-node \
   -p 8083:8080 \
-  --mount type=bind,source="$(pwd)"/node/1,target=/var/app,bind-propagation=slave \
+  --mount type=bind,source="$(pwd)"/node/1,target=/var/app,bind-propagation=shared \
   -itd node:jammy \
-  /bin/bash -c "nohup node app.js"
+  /bin/bash -c "node app.js"
 
+docker rm -f node2
+docker run --name node2 \
+  --network=nginx-node \
+  -p 8084:8080 \
+  --mount type=bind,source="$(pwd)"/node/2,target=/var/app,bind-propagation=shared \
+  -itd node:jammy \
+  /bin/bash -c "node app.js"
 ```
 
 2. RUN:
 ```
-curl 127.0.0.1:8082
+curl 127.0.0.1:8082/1/
+curl 127.0.0.1:8082/2/
 ```
