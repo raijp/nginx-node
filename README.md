@@ -15,20 +15,20 @@ docker network remove nginx-node
 docker network create nginx-node --subnet=172.41.0.0/16 --gateway=172.41.0.1
 
 docker run --name nginx1 \
-  --network=nginx-node \
+  --network nginx-node \
   -p 8082:80 \
   --mount type=bind,source="$(pwd)"/nginx/etc/nginx/conf.d,target=/etc/nginx/conf.d,bind-propagation=shared \
   -d nginx:bullseye
 
 docker run --name node1 \
-  --network=nginx-node \
+  --network nginx-node \
   -p 8083:8080 \
   --mount type=bind,source="$(pwd)"/node/1,target=/var/app,bind-propagation=shared \
   -itd node:jammy \
   /bin/bash -c "node app.js"
 
 docker run --name node2 \
-  --network=nginx-node \
+  --network nginx-node \
   -p 8084:8080 \
   --mount type=bind,source="$(pwd)"/node/2,target=/var/app,bind-propagation=shared \
   -itd node:jammy \
